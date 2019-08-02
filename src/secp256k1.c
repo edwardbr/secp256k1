@@ -350,7 +350,6 @@ int secp256k1_ecdsa_sign(const secp256k1_context* ctx, secp256k1_ecdsa_signature
     secp256k1_scalar sec, non, msg;
     int ret = 0;
     int overflow = 0;
-    const unsigned char secp256k1_ecdsa_der_algo16[17] = "ECDSA+DER       ";
     VERIFY_CHECK(ctx != NULL);
     ARG_CHECK(secp256k1_ecmult_gen_context_is_built(&ctx->ecmult_gen_ctx));
     ARG_CHECK(msg32 != NULL);
