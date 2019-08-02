@@ -18,7 +18,7 @@ HunterGate(
 
 set(HUNTER_KEEP_PACKAGE_SOURCES ON)
 
-project(libsecp256k1 VERSION 0.1)
+project(secp256k1 VERSION 0.1)
 
 include(CTest)
 
@@ -158,7 +158,7 @@ if(SECP256K1_ECMULT_STATIC_PRECOMPUTATION)
 endif()
 
 # Generate the config
-configure_file(./${PROJECT_NAME}-config.h.cmake.in src/${PROJECT_NAME}-config.h ESCAPE_QUOTES)
+configure_file(./lib${PROJECT_NAME}-config.h.cmake.in src/lib${PROJECT_NAME}-config.h ESCAPE_QUOTES)
 target_compile_definitions(${PROJECT_NAME} PRIVATE HAVE_CONFIG_H SECP256K1_BUILD)
 
 # Tests
@@ -189,7 +189,7 @@ add_secp256k1_bench(bench_internal src/bench_internal.c)
 
 
 set(pc_config "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc")
-configure_file(${PROJECT_NAME}.pc.in ${pc_config} @ONLY)
+configure_file(lib${PROJECT_NAME}.pc.in ${pc_config} @ONLY)
 
 #set(la_config "${CMAKE_CURRENT_BINARY_DIR}/lib${PROJECT_NAME}.la")
 #configure_file(${PROJECT_NAME}.la.in ${la_config} @ONLY)
