@@ -18,7 +18,7 @@ HunterGate(
 
 set(HUNTER_KEEP_PACKAGE_SOURCES ON)
 
-project(secp256k1 VERSION 0.1)
+project(secp256k1 VERSION 0.2)
 
 include(CTest)
 
