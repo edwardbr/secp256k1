@@ -47,28 +47,27 @@ add_library(${PROJECT_NAME} src/secp256k1.c)
 target_include_directories(${PROJECT_NAME} PRIVATE 
 	${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/src ${CMAKE_CURRENT_BINARY_DIR}/src)
 
-# We need to link in GMP
-find_package(GMP)
-if(GMP_FOUND)
-	target_include_directories(${PROJECT_NAME} PUBLIC ${GMP_INCLUDE_DIR})
-	target_link_libraries(${PROJECT_NAME} ${GMP_LIBRARY})
-	set(USE_NUM_GMP 1)
-	set(USE_FIELD_INV_NUM 1)
-	set(USE_SCALAR_INV_NUM 1)
-else()
-	set(USE_NUM_NONE 1)
-	set(USE_FIELD_INV_BUILTIN 1)
-	set(USE_SCALAR_INV_BUILTIN 1)
-endif()
-
 if ( WIN32 )
-	set( SECP256K1_BUILD_DEFINES
-		USE_FIELD_10X26
-		USE_FIELD_INV_BUILTIN
-		USE_NUM_NONE
-		USE_SCALAR_8X32
-		USE_SCALAR_INV_BUILTIN )
+	set(USE_FIELD_10X26 1)
+	set(USE_FIELD_INV_BUILTIN 1)
+	set(USE_NUM_NONE 1)
+	set(USE_SCALAR_8X32 1)
+	set(USE_SCALAR_INV_BUILTIN 1)
 else ( WIN32 )
+	# We need to link in GMP
+	find_package(GMP)
+	if(GMP_FOUND)
+		target_include_directories(${PROJECT_NAME} PUBLIC ${GMP_INCLUDE_DIR})
+		target_link_libraries(${PROJECT_NAME} ${GMP_LIBRARY})
+		set(USE_NUM_GMP 1)
+		set(USE_FIELD_INV_NUM 1)
+		set(USE_SCALAR_INV_NUM 1)
+	else()
+		set(USE_NUM_NONE 1)
+		set(USE_FIELD_INV_BUILTIN 1)
+		set(USE_SCALAR_INV_BUILTIN 1)
+	endif()
+
 	# We check if amd64 asm is supported.
 	check_c_source_compiles("
 		#include <stdint.h>
